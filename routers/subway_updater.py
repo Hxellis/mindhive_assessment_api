@@ -50,16 +50,12 @@ def findAndUpdateKLSubway():
         })
         html = response.text
 
-        # Extract the JSON-like part using regex
         json_match = re.search(r'map\.init\((.*?)\);', html, re.DOTALL)
 
         if not json_match:
             raise ValueError("DATA NOT FOUND")
 
-        json_data = json_match.group(1)  # Get matched JSON-like content
-
-        # try:
-        #     # Convert to a valid JSON object
+        json_data = json_match.group(1)  
         map_data = json.loads(json_data)
 
         subwayBranchList = map_data['markerData']
@@ -69,17 +65,14 @@ def findAndUpdateKLSubway():
             html_content = subway['infoBox']['content']
             soup = BeautifulSoup(html_content, "html.parser")
 
-            # Get name
             name = soup.find("h4").get_text(strip=True) if soup.find("h4") else ""
 
-            # Get address (usually the first <p>)
             p_tags = soup.find_all("p")
             address = p_tags[0].get_text(strip=True) if len(p_tags) > 0 else ""
 
             if "kuala lumpur" not in address.lower():
                 continue  
 
-            # Get hours (next <p> or nested ones)
             hours = []
             for p in p_tags[1:]:
                 txt = p.get_text(strip=True)
@@ -87,7 +80,6 @@ def findAndUpdateKLSubway():
                     hours.append(txt)
             operating_hours = " | ".join(hours)
 
-            # Get Waze link
             waze_link = ""
             for a in soup.find_all("a"):
                 href = a.get("href")
@@ -95,7 +87,6 @@ def findAndUpdateKLSubway():
                     waze_link = href
                     break
 
-            # Get coordinates
             lat = subway["position"]["lat"]
             lng = subway["position"]["lng"]
 
