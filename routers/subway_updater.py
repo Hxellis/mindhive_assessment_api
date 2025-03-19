@@ -69,7 +69,6 @@ def findAndUpdateKLSubway():
 
             p_tags = soup.find_all("p")
             address = p_tags[0].get_text(strip=True) if len(p_tags) > 0 else ""
-
             if "kuala lumpur" not in address.lower():
                 continue  
 
@@ -78,7 +77,7 @@ def findAndUpdateKLSubway():
                 txt = p.get_text(strip=True)
                 if txt and "Find out more" not in txt:
                     hours.append(txt)
-            operating_hours = " | ".join(hours)
+            operating_hours = " | ".join(hours[1:]).replace("–", "-")
 
             waze_link = ""
             for a in soup.find_all("a"):
