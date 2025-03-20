@@ -12,12 +12,12 @@ A FastAPI server with a total of 3 endpoints ( +1 testing ) deployed on Render p
 
 
 ### Libraries (specified in requirements.txt)
-FastAPI - API library
-uvicorn[standard] - Used for production deployment
-python-dotenv - Read enviromental files
-requests - Make http request, used in web scrapping Subway branches and chatbot messages
-pydantic - Comes with FastAPI, used to construct HTTP body structures when using POST
-mysql-connector-python - Connect to MySQL server and making queries
+FastAPI - API library\
+uvicorn[standard] - Used for production deployment\
+python-dotenv - Read enviromental files\
+requests - Make http request, used in web scrapping Subway branches and chatbot messages\
+pydantic - Comes with FastAPI, used to construct HTTP body structures when using POST\
+mysql-connector-python - Connect to MySQL server and making queries\
 beautifulsoup4 - Parsing webpage strings to scrape for data
 
 ### Endpoints
@@ -34,16 +34,16 @@ Scrapes the "https://www.subway.com.my/find-a-subway" webpage for all Subway bra
 #### POST /chatbotSendMsg
 Send a message with relavant data of of the user and the current filtered subway branches, and makes a HTTP request to a LLM (Google: Gemini Flash Lite 2.0 Preview) hosted on OpenRouter with a fixed prompt, allowing data to be parsed on the LLM's response and returned. Data consistency on questions may vvary due to it being a free model.
 
-body={
-    center: object (lat: Num, lng: Num),
-    qustion: string,
-    branches: list [{ name: string, address: string, operating_hours: string }]
+body={\
+    center: object (lat: Num, lng: Num),\
+    qustion: string,\
+    branches: list [{ name: string, address: string, operating_hours: string }]\
 }
 
 ### Enviromental Files
-DB_HOST
-DB_USERNAME
-DB_PASSWORD
-DB_DBNAME
-OPENROUTER_URL
+DB_HOST\
+DB_USERNAME\
+DB_PASSWORD\
+DB_DBNAME\
+OPENROUTER_URL\
 OPENROUTER_KEY
