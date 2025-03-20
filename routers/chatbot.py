@@ -2,7 +2,6 @@ import requests
 import json
 import re
 import os
-import mysql.connector
 from dotenv import load_dotenv
 from fastapi import APIRouter
 from pydantic import BaseModel
