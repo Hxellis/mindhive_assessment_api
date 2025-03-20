@@ -67,27 +67,27 @@ def chatbot_send_message(body: Message):
         ⚠️ Do not include any explanation, markdown, comments, extra keys, or partial data. Ensure every branch object includes all 3 required fields: `name`, `address`, and `operating_hours`.
         """
 
-        print(prompt)
+        print(os.getenv("OPENROUTER_URL"), os.getenv('OPENROUTER_KEY'))
 
         response = requests.post(
             url=os.getenv("OPENROUTER_URL"),
             headers={
-                "Authorization": f"Bearer {os.getenv("OPENROUTER_KEY")}",
+                "Authorization": f"Bearer {os.getenv('OPENROUTER_KEY')}",
                 "Content-Type": "application/json",
             },
-            data=json.dumps({
+            json={
                 "model": "google/gemini-2.0-flash-lite-preview-02-05:free",
                 "messages": [{
                     "role": "user",
                     "content": [{ "type": "text", "text": prompt }]
                 }],
-                
-            })
+            }
         )
 
-        raw_content = response.json()["choices"][0]["message"]["content"]
+        if not response.text.strip():
+            raise ValueError("Empty response from OpenRouter")
 
-        print(raw_content, "RAW")
+        raw_content = response.json()["choices"][0]["message"]["content"]
 
         # Extract JSON block from markdown-style triple backticks
         json_str = re.search(r"```json\s*(\{.*\})\s*```", raw_content, re.DOTALL)
