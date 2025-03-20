@@ -2,9 +2,11 @@ import os
 import mysql.connector
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from routers import subway_updater
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+
+from routers import subway_updater
+from routers import gemma_chatbot
 
 load_dotenv()
 
@@ -26,6 +28,7 @@ app.add_middleware(
 
 
 app.include_router(subway_updater.router)
+app.include_router(gemma_chatbot.router)
 
 
 @app.get("/test")
